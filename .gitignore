@@ -134,3 +134,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ensure sensitive or large files are not pushed to Github
+node_modules/
+.env
+uploads/
