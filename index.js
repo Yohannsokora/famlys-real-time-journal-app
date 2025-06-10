@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const http = require("http");
 const { Server } = require("socket.io");
+const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
 
 // Loads .env file to access secrets
 dotenv.config();
@@ -23,6 +25,8 @@ const io = new Server(
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
+app.use("/api", userRoutes);
 
 // Test route
 app.get("/",(req, res) => {res.send("Famlys App is running");})
