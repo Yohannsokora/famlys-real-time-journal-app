@@ -7,6 +7,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
+const familyRoutes = require("./routes/family.routes");
 
 // Loads .env file to access secrets
 dotenv.config();
@@ -22,11 +23,15 @@ const io = new Server(
     }
 );
 
+// Attach Socket.IO instance to Express app for controller access
+app.set("io", io);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", userRoutes);
+app.use("/family", familyRoutes);
 
 // Test route
 app.get("/",(req, res) => {res.send("Famlys App is running");})

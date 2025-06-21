@@ -18,6 +18,7 @@ exports.registerUser = async(req, res) => {
         const passwordHash = await bcrypt.hash(password, 11);
         // Create new user in Mongodb with the hash password
         const user = await User.create({ username, email, passwordHash});
+
         res.status(201).json({ message: "User registered!", userId: user._id});
     }
     
