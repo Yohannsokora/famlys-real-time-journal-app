@@ -8,6 +8,8 @@ const { Server } = require("socket.io");
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const familyRoutes = require("./routes/family.routes");
+const journalRoutes = require("./routes/journal.routes");
+const commentRoutes = require("./routes/comment.routes");
 
 // Loads .env file to access secrets
 dotenv.config();
@@ -32,6 +34,9 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", userRoutes);
 app.use("/family", familyRoutes);
+app.use("/api/journal", journalRoutes);
+app.use("/uploads", express.static("uploads")); // Serve static files from 'uploads' directory
+app.use("/api/comments", commentRoutes);
 
 // Test route
 app.get("/",(req, res) => {res.send("Famlys App is running");})

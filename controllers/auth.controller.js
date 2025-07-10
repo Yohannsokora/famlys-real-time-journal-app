@@ -17,7 +17,7 @@ exports.registerUser = async(req, res) => {
         // hash password before saving it.
         const passwordHash = await bcrypt.hash(password, 11);
         // Create new user in Mongodb with the hash password
-        const user = await User.create({ username, email, passwordHash});
+        const user = await User.create({ username, email, passwordHash, familyId: req.body.familyId });
 
         res.status(201).json({ message: "User registered!", userId: user._id});
     }
@@ -40,8 +40,11 @@ exports.loginUser = async(req, res) => {
         if(!ismatch)
             return res.status(400).json({message: "Invalid credentials"});
 
-        const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: "1d",});
-        res.status(200).json({token, user: {id: user._id, username: user.username}});
+        const token = jwt.sign(
+            {_id: user._id, familyId: user.familyId},
+            process.env.JWT_SECRET,
+            {expiresIn: "1d",});
+        res.status(200).json({token, user: {id: user._id, username: user.username, familyId: user.familyId}});
     }
 
     catch(err){

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {createFamily, joinFamily, leaveFamily} = require('../controllers/family.controller');
 
-const verifyToken = require('../middleware/authMiddleware');
+const verifyToken = require('../middleware/auth.middleware');
 
 // Create a new family
 router.post('/create', verifyToken, createFamily);
